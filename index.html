@@ -2,95 +2,1002 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Spyder Shop - CI/CD Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spyder Shop - Premium Tech & Gadgets</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #074a7a;
+      --secondary: #0096c7;
+      --accent: #27ae60;
+      --light: #e0f7fa;
+      --dark: #2c3e50;
+      --gray: #6c7a89;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header Styles */
+    header {
+      background: var(--primary);
+      padding: 20px 0;
+      color: var(--light);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      color: var(--light);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 30px;
+    }
+    
+    nav ul li a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    nav ul li a:hover {
+      color: #a0cde8;
+    }
+    
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: var(--light);
+      bottom: -5px;
+      left: 0;
+      transition: var(--transition);
+    }
+    
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+    
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                  url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+      background-size: cover;
+      background-position: center;
+      margin: 40px auto;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      max-width: 1200px;
+    }
+    
+    .hero h1 {
+      font-size: 48px;
+      color: var(--primary);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 2px rgba(160, 205, 232, 0.5);
+    }
+    
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      color: var(--dark);
+    }
+    
+    .btn {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 15px 40px;
+      border-radius: 50px;
+      box-shadow: 0 6px 15px rgba(0, 150, 199, 0.4);
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .btn:hover {
+      background: #0077b6;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 150, 199, 0.5);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--secondary);
+      color: var(--secondary);
+      margin-left: 15px;
+    }
+    
+    .btn-outline:hover {
+      background: var(--secondary);
+      color: var(--white);
+    }
+    
+    /* Features Section */
+    .features {
+      padding: 60px 0;
+      background: var(--white);
+      margin: 40px 0;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+    }
+    
+    .section-title {
+      text-align: center;
+      color: var(--primary);
+      font-size: 36px;
+      margin-bottom: 50px;
+      font-weight: 700;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+    }
+    
+    .feature-card {
+      background: var(--white);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-icon {
+      font-size: 50px;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+    
+    .feature-card h3 {
+      color: var(--primary);
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+    
+    .feature-card p {
+      color: var(--gray);
+      font-size: 16px;
+    }
+    
+    /* Products Section */
+    .products {
+      padding: 60px 0;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .product-card {
+      background: var(--white);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .product-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--accent);
+      color: var(--white);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 1;
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .product-card:hover .product-image {
+      transform: scale(1.05);
+    }
+    
+    .product-info {
+      padding: 20px;
+    }
+    
+    .product-category {
+      color: var(--secondary);
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      display: block;
+    }
+    
+    .product-title {
+      color: var(--primary);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .product-description {
+      color: var(--gray);
+      font-size: 14px;
+      margin-bottom: 15px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .product-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+    }
+    
+    .price {
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--accent);
+    }
+    
+    .old-price {
+      text-decoration: line-through;
+      color: var(--gray);
+      font-size: 14px;
+      margin-left: 5px;
+    }
+    
+    .add-to-cart {
+      background: var(--secondary);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+    }
+    
+    .add-to-cart i {
+      margin-right: 5px;
+    }
+    
+    .add-to-cart:hover {
+      background: var(--primary);
+    }
+    
+    .rating {
+      color: #ffc107;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    
+    /* Testimonials */
+    .testimonials {
+      padding: 60px 0;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      margin: 40px 0;
+      border-radius: 15px;
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 60px;
+      color: rgba(0, 150, 199, 0.1);
+      font-family: serif;
+      line-height: 1;
+    }
+    
+    .testimonial-text {
+      color: var(--dark);
+      font-style: italic;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+    
+    .author-info h4 {
+      color: var(--primary);
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    
+    .author-info p {
+      color: var(--gray);
+      font-size: 14px;
+    }
+    
+    /* Newsletter */
+    .newsletter {
+      padding: 60px 0;
+      text-align: center;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 15px;
+      margin: 40px 0;
+    }
+    
+    .newsletter h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    
+    .newsletter p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+    
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .newsletter-input {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px 0 0 50px;
+      font-size: 16px;
+      outline: none;
+    }
+    
+    .newsletter-btn {
+      padding: 15px 30px;
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 0 50px 50px 0;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .newsletter-btn:hover {
+      background: #219653;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: var(--light);
+      padding: 60px 0 30px;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-column h3 {
+      color: var(--white);
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 2px;
+      background: var(--secondary);
+      bottom: 0;
+      left: 0;
+    }
+    
+    .footer-column ul {
+      list-style: none;
+    }
+    
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-column ul li a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+    
+    .footer-column ul li a:hover {
+      color: var(--white);
+      padding-left: 5px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+      }
+      
+      nav ul {
+        margin-top: 20px;
+      }
+      
+      nav ul li {
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+      
+      .hero h1 {
+        font-size: 36px;
+      }
+      
+      .hero p {
+        font-size: 18px;
+      }
+      
+      .btn {
+        padding: 12px 30px;
+      }
+      
+      .newsletter-form {
+        flex-direction: column;
+      }
+      
+      .newsletter-input {
+        border-radius: 50px;
+        margin-bottom: 10px;
+      }
+      
+      .newsletter-btn {
+        border-radius: 50px;
+      }
+    }
+  </style>
 </head>
-<body style="margin:0; background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#2c3e50;">
-
+<body>
   <!-- Header -->
-  <header style="background: #074a7a; padding: 25px 0; text-align: center; color: #e0f7fa; font-size: 32px; font-weight: 700; letter-spacing: 2px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-    Spyder Shop - CI/CD Demo
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-spider"></i>
+        Spyder Shop
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Categories</a></li>
+          <li><a href="#">Deals</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li>
+            <div class="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count">3</span>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <!-- Hero Section -->
-  <section style="text-align: center; padding: 60px 20px; background: #ffffffcc; max-width: 960px; margin: 40px auto; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
-    <h1 style="font-size: 40px; color: #0077b6; margin-bottom: 15px; text-transform: uppercase; text-shadow: 1px 1px 2px #a0cde8;">
-      Welcome to Spyder Shop!
-    </h1>
-    <p style="font-size: 20px; margin-bottom: 40px; max-width: 650px; margin-left: auto; margin-right: auto; color: #34495e;">
-      Discover incredible deals on the latest tech and gadgets, hosted seamlessly on <strong>AWS S3</strong> — powered by a fully automated CI/CD pipeline.
-    </p>
-    <a href="https://aws.amazon.com/s3/" target="_blank"
-       style="display: inline-block; background: #0096c7; color: #f1f1f1; text-decoration: none; font-weight: 700; padding: 18px 40px; border-radius: 50px; box-shadow: 0 6px 15px rgba(0, 150, 199, 0.6); transition: background-color 0.3s ease, transform 0.2s ease;">
-      Learn About S3 Hosting →
-    </a>
+  <section class="hero">
+    <div class="container">
+      <h1>Premium Tech & Gadgets</h1>
+      <p>Discover the latest in technology with our curated collection of high-quality products, all delivered through our seamless AWS-powered platform.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn">Shop Now</a>
+        <a href="#" class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Spyder Shop?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-shipping-fast"></i>
+          </div>
+          <h3>Fast Delivery</h3>
+          <p>Get your products delivered within 2-3 business days with our premium shipping partners.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Secure Payments</h3>
+          <p>100% secure checkout with encrypted transactions and multiple payment options.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3>24/7 Support</h3>
+          <p>Our customer service team is available round the clock to assist you.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Products Section -->
-  <section style="max-width: 960px; margin: 0 auto 80px; padding: 0 20px;">
-    <h2 style="text-align: center; color: #0077b6; font-size: 32px; margin-bottom: 40px; font-weight: 700; letter-spacing: 1px;">
-      Featured Products
-    </h2>
-
-    <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-
-      <!-- Product Card 1 -->
-      <div style="background: #fff; border-radius: 20px; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12); width: 270px; padding: 25px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-           onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 30px rgba(0,0,0,0.25)';"
-           onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 18px rgba(0,0,0,0.12)';">
-        <img src="https://via.placeholder.com/230x160.png?text=Wireless+Headphones" alt="Wireless Headphones"
-             style="width: 100%; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
-        <h3 style="color: #004466; font-size: 22px; margin-bottom: 10px; font-weight: 700;">Wireless Headphones</h3>
-        <p style="color: #6c7a89; font-size: 15px; margin-bottom: 20px; line-height: 1.4;">
-          Experience crystal clear sound with active noise cancellation.
-        </p>
-        <span style="font-weight: 800; font-size: 20px; color: #27ae60;">$99.99</span>
-        <br />
-        <button style="margin-top: 20px; background: #0077b6; color: #fff; border: none; border-radius: 30px; padding: 12px 35px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 6px 15px rgba(0,119,182,0.5); transition: background-color 0.3s ease;">
-          Add to Cart
-        </button>
+  <section class="products">
+    <div class="container">
+      <h2 class="section-title">Featured Products</h2>
+      <div class="products-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <span class="product-badge">Sale</span>
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+               alt="Wireless Headphones" class="product-image">
+          <div class="product-info">
+            <span class="product-category">Audio</span>
+            <h3 class="product-title">Premium Wireless Headphones</h3>
+            <p class="product-description">Experience crystal clear sound with active noise cancellation and 30-hour battery life.</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>(128)</span>
+            </div>
+            <div class="product-price">
+              <div>
+                <span class="price">$99.99</span>
+                <span class="old-price">$129.99</span>
+              </div>
+              <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="product-card">
+          <span class="product-badge">New</span>
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1399&q=80" 
+               alt="Smart Watch" class="product-image">
+          <div class="product-info">
+            <span class="product-category">Wearables</span>
+            <h3 class="product-title">Pro Series Smart Watch</h3>
+            <p class="product-description">Track your health, receive notifications, and enjoy 7-day battery life with this premium smartwatch.</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <span>(86)</span>
+            </div>
+            <div class="product-price">
+              <div>
+                <span class="price">$149.99</span>
+              </div>
+              <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1489&q=80" 
+               alt="Bluetooth Speaker" class="product-image">
+          <div class="product-info">
+            <span class="product-category">Audio</span>
+            <h3 class="product-title">Portable Bluetooth Speaker</h3>
+            <p class="product-description">Powerful sound with deep bass, waterproof design, and 20-hour playtime.</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <span>(214)</span>
+            </div>
+            <div class="product-price">
+              <div>
+                <span class="price">$79.99</span>
+                <span class="old-price">$89.99</span>
+              </div>
+              <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 4 -->
+        <div class="product-card">
+          <span class="product-badge">Popular</span>
+          <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" 
+               alt="Wireless Earbuds" class="product-image">
+          <div class="product-info">
+            <span class="product-category">Audio</span>
+            <h3 class="product-title">True Wireless Earbuds</h3>
+            <p class="product-description">Premium sound quality with touch controls and wireless charging case.</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>(312)</span>
+            </div>
+            <div class="product-price">
+              <div>
+                <span class="price">$89.99</span>
+              </div>
+              <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 5 -->
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1326&q=80" 
+               alt="Laptop" class="product-image">
+          <div class="product-info">
+            <span class="product-category">Computers</span>
+            <h3 class="product-title">Ultra Slim Laptop</h3>
+            <p class="product-description">Powerful performance in a lightweight design with all-day battery life.</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <span>(54)</span>
+            </div>
+            <div class="product-price">
+              <div>
+                <span class="price">$899.99</span>
+                <span class="old-price">$999.99</span>
+              </div>
+              <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 6 -->
+        <div class="product-card">
+          <span class="product-badge">Sale</span>
+          <img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+               alt="Tablet" class="product-image">
+          <div class="product-info">
+            <span class="product-category">Tablets</span>
+            <h3 class="product-title">Pro Drawing Tablet</h3>
+            <p class="product-description">Professional drawing tablet with pressure-sensitive stylus and high-resolution display.</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <span>(167)</span>
+            </div>
+            <div class="product-price">
+              <div>
+                <span class="price">$349.99</span>
+                <span class="old-price">$399.99</span>
+              </div>
+              <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Product Card 2 -->
-      <div style="background: #fff; border-radius: 20px; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12); width: 270px; padding: 25px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-           onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 30px rgba(0,0,0,0.25)';"
-           onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 18px rgba(0,0,0,0.12)';">
-        <img src="https://via.placeholder.com/230x160.png?text=Smart+Watch" alt="Smart Watch"
-             style="width: 100%; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
-        <h3 style="color: #004466; font-size: 22px; margin-bottom: 10px; font-weight: 700;">Smart Watch</h3>
-        <p style="color: #6c7a89; font-size: 15px; margin-bottom: 20px; line-height: 1.4;">
-          Stay connected and track your health with style.
-        </p>
-        <span style="font-weight: 800; font-size: 20px; color: #27ae60;">$149.99</span>
-        <br />
-        <button style="margin-top: 20px; background: #0077b6; color: #fff; border: none; border-radius: 30px; padding: 12px 35px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 6px 15px rgba(0,119,182,0.5); transition: background-color 0.3s ease;">
-          Add to Cart
-        </button>
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our Customers Say</h2>
+      <div class="testimonials-grid">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            The wireless headphones I bought from Spyder Shop are amazing! The sound quality is exceptional and the battery life lasts forever. Highly recommend!
+          </p>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah J." class="author-avatar">
+            <div class="author-info">
+              <h4>Sarah Johnson</h4>
+              <p>Verified Buyer</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            Fast shipping and excellent customer service. My smartwatch arrived earlier than expected and works perfectly. Will definitely shop here again!
+          </p>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T." class="author-avatar">
+            <div class="author-info">
+              <h4>Michael Thompson</h4>
+              <p>Verified Buyer</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            I was hesitant to buy tech online, but Spyder Shop made the process so easy. The product descriptions were accurate and the quality is top-notch.
+          </p>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Emily R." class="author-avatar">
+            <div class="author-info">
+              <h4>Emily Rodriguez</h4>
+              <p>Verified Buyer</p>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Product Card 3 -->
-      <div style="background: #fff; border-radius: 20px; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12); width: 270px; padding: 25px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-           onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 30px rgba(0,0,0,0.25)';"
-           onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 18px rgba(0,0,0,0.12)';">
-        <img src="https://via.placeholder.com/230x160.png?text=Bluetooth+Speaker" alt="Bluetooth Speaker"
-             style="width: 100%; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
-        <h3 style="color: #004466; font-size: 22px; margin-bottom: 10px; font-weight: 700;">Bluetooth Speaker</h3>
-        <p style="color: #6c7a89; font-size: 15px; margin-bottom: 20px; line-height: 1.4;">
-          Portable sound with deep bass for every party.
-        </p>
-        <span style="font-weight: 800; font-size: 20px; color: #27ae60;">$79.99</span>
-        <br />
-        <button style="margin-top: 20px; background: #0077b6; color: #fff; border: none; border-radius: 30px; padding: 12px 35px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 6px 15px rgba(0,119,182,0.5); transition: background-color 0.3s ease;">
-          Add to Cart
-        </button>
-      </div>
-
+  <!-- Newsletter Section -->
+  <section class="newsletter">
+    <div class="container">
+      <h2>Stay Updated</h2>
+      <p>Subscribe to our newsletter for exclusive deals, new arrivals, and tech tips delivered straight to your inbox.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email address" class="newsletter-input" required>
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer style="background: #074a7a; color: #cce7f0; text-align: center; padding: 25px 0; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; box-shadow: inset 0 4px 6px rgba(255,255,255,0.15);">
-    &copy; 2025 Spyder Shop. All rights reserved.
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Column 1 -->
+        <div class="footer-column">
+          <h3>Spyder Shop</h3>
+          <p style="color: rgba(255, 255, 255, 0.7); margin-top: 20px; font-size: 14px;">
+            Your premier destination for the latest tech gadgets and accessories, powered by AWS cloud technology.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <!-- Column 2 -->
+        <div class="footer-column">
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="#">All Products</a></li>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Featured</a></li>
+            <li><a href="#">Deals & Promotions</a></li>
+            <li><a href="#">Gift Cards</a></li>
+          </ul>
+        </div>
+        
+        <!-- Column 3 -->
+        <div class="footer-column">
+          <h3>Customer Service</h3>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Returns & Exchanges</a></li>
+            <li><a href="#">Warranty Information</a></li>
+          </ul>
+        </div>
+        
+        <!-- Column 4 -->
+        <div class="footer-column">
+          <h3>About Us</h3>
+          <ul>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Tech Blog</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">AWS Partnership</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2023 Spyder Shop. All rights reserved. | Powered by AWS Cloud Services
+      </div>
+    </div>
   </footer>
-
 </body>
 </html>
