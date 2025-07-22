@@ -1268,3 +1268,404 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mock Data
+        const products = [
+            {
+                id: 'prod1',
+                name: 'Chocolate Truffle Cake',
+                description: 'Rich chocolate cake with layers of dark chocolate ganache and chocolate mousse.',
+                price: 3800,
+                category: 'Cakes',
+                image: 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+                rating: 4.8,
+                variants: [
+                    { label: '1/2 kg', price: 2200 },
+                    { label: '1 kg', price: 3800 },
+                    { label: '2 kg', price: 7000 }
+                ],
+                tags: ['chocolate', 'best-seller']
+            },
+            {
+                id: 'prod2',
+                name: 'Red Velvet Cake',
+                description: 'Classic red velvet cake with cream cheese frosting and decorative red crumbs.',
+                price: 4200,
+                category: 'Cakes',
+                image: 'https://images.unsplash.com/photo-1552689486-f6773047d19f?ixlib=rb-1.2.1&auto=format&fit=crop&w=651&q=80',
+                rating: 4.7,
+                variants: [
+                    { label: '1/2 kg', price: 2500 },
+                    { label: '1 kg', price: 4200 }
+                ],
+                tags: ['red-velvet', 'popular']
+            },
+            {
+                id: 'prod3',
+                name: 'New York Cheesecake',
+                description: 'Creamy classic cheesecake with a graham cracker crust and berry compote topping.',
+                price: 3200,
+                category: 'Cheesecakes',
+                image: 'https://images.unsplash.com/photo-1562440499-64c9a111f713?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+                rating: 4.9,
+                variants: [
+                    { label: 'Regular', price: 3200 },
+                    { label: 'Large', price: 4500 }
+                ],
+                tags: ['cheesecake', 'classic']
+            },
+            {
+                id: 'prod4',
+                name: 'Carrot Cake',
+                description: 'Moist carrot cake with walnuts, topped with cream cheese frosting and caramel drizzle.',
+                price: 3500,
+                category: 'Cakes',
+                image: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=80',
+                rating: 4.6,
+                variants: [
+                    { label: '1/2 kg', price: 2000 },
+                    { label: '1 kg', price: 3500 }
+                ],
+                tags: ['carrot', 'nuts']
+            },
+            {
+                id: 'prod5',
+                name: 'Strawberry Shortcake',
+                description: 'Light sponge cake layered with fresh strawberries and whipped cream.',
+                price: 3000,
+                category: 'Seasonal',
+                image: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+                rating: 4.5,
+                variants: [
+                    { label: 'Regular', price: 3000 },
+                    { label: 'Large', price: 4500 }
+                ],
+                tags: ['strawberry', 'seasonal']
+            },
+            {
+                id: 'prod6',
+                name: 'Tiramisu',
+                description: 'Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone cream.',
+                price: 2800,
+                category: 'Desserts',
+                image: 'https://images.unsplash.com/photo-1535920527002-b35e96722eb9?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+                rating: 4.8,
+                variants: [
+                    { label: 'Small', price: 1800 },
+                    { label: 'Regular', price: 2800 }
+                ],
+                tags: ['tiramisu', 'coffee']
+            }
+        ];
+
+        const categories = [
+            { id: 'cat1', name: 'Birthday Cakes', icon: 'fas fa-birthday-cake', count: 12 },
+            { id: 'cat2', name: 'Wedding Cakes', icon: 'fas fa-ring', count: 8 },
+            { id: 'cat3', name: 'Cupcakes', icon: 'fas fa-cupcake', count: 15 },
+            { id: 'cat4', name: 'Cheesecakes', icon: 'fas fa-cheese', count: 6 },
+            { id: 'cat5', name: 'Seasonal Specials', icon: 'fas fa-calendar-alt', count: 5 },
+            { id: 'cat6', name: 'Custom Orders', icon: 'fas fa-palette', count: 10 }
+        ];
+
+        // DOM Elements
+        const productsContainer = document.getElementById('products-container');
+        const categoriesContainer = document.getElementById('categories-container');
+        const cartToggle = document.getElementById('cart-toggle');
+        const closeCart = document.getElementById('close-cart');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const overlay = document.getElementById('overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartEmpty = document.getElementById('cart-empty');
+        const cartFooter = document.getElementById('cart-footer');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const cartCount = document.querySelector('.cart-count');
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const header = document.getElementById('header');
+        const toast = document.getElementById('toast');
+        const testimonialDots = document.querySelectorAll('.dot');
+        const testimonials = document.querySelectorAll('.testimonial');
+
+        // State
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let currentTestimonial = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            renderCategories();
+            updateCart();
+            initTestimonialSlider();
+            
+            // Header scroll effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+
+        // Render Products
+        function renderProducts() {
+            productsContainer.innerHTML = '';
+            
+            products.forEach(product => {
+                const productEl = document.createElement('div');
+                productEl.className = 'product-card animate';
+                productEl.innerHTML = `
+                    ${product.tags.includes('best-seller') ? `<span class="product-badge">Best Seller</span>` : ''}
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-footer">
+                            <div>
+                                <div class="product-price">¥${product.price.toLocaleString()}</div>
+                                <div class="product-rating">
+                                    ${Array(Math.floor(product.rating)).fill().map(() => '<i class="fas fa-star"></i>').join('')}
+                                    ${product.rating % 1 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                                    <span>(${product.rating})</span>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" data-id="${product.id}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsContainer.appendChild(productEl);
+            });
+            
+            // Add event listeners to add-to-cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = e.currentTarget.getAttribute('data-id');
+                    addToCart(productId);
+                });
+            });
+        }
+
+        // Render Categories
+        function renderCategories() {
+            categoriesContainer.innerHTML = '';
+            
+            categories.forEach(category => {
+                const categoryEl = document.createElement('div');
+                categoryEl.className = 'category-card animate';
+                categoryEl.innerHTML = `
+                    <div class="category-icon">
+                        <i class="${category.icon}"></i>
+                    </div>
+                    <h3 class="category-title">${category.name}</h3>
+                    <p class="category-count">${category.count} items</p>
+                `;
+                categoriesContainer.appendChild(categoryEl);
+            });
+        }
+
+        // Cart Functions
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            showToast(`${product.name} added to cart`);
+        }
+
+        function updateCart() {
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Render cart items
+            if (cart.length === 0) {
+                cartEmpty.style.display = 'flex';
+                cartItemsContainer.style.display = 'none';
+                cartFooter.style.display = 'none';
+            } else {
+                cartEmpty.style.display = 'none';
+                cartItemsContainer.style.display = 'block';
+                cartFooter.style.display = 'block';
+                
+                cartItemsContainer.innerHTML = '';
+                cart.forEach((item, index) => {
+                    const cartItemEl = document.createElement('div');
+                    cartItemEl.className = 'cart-item';
+                    cartItemEl.innerHTML = `
+                        <div class="cart-item-image">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">${item.name}</h4>
+                            <div class="cart-item-price">¥${item.price.toLocaleString()}</div>
+                            <div class="cart-item-actions">
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" data-index="${index}">-</button>
+                                    <span class="quantity">${item.quantity}</span>
+                                    <button class="quantity-btn plus" data-index="${index}">+</button>
+                                </div>
+                                <button class="remove-item" data-index="${index}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItemEl);
+                });
+                
+                // Calculate totals
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const delivery = 500;
+                const total = subtotal + delivery;
+                
+                cartSubtotal.textContent = `¥${subtotal.toLocaleString()}`;
+                cartTotal.textContent = `¥${total.toLocaleString()}`;
+            }
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = e.currentTarget.getAttribute('data-index');
+                    updateQuantity(index, -1);
+                });
+            });
+            
+            document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = e.currentTarget.getAttribute('data-index');
+                    updateQuantity(index, 1);
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = e.currentTarget.getAttribute('data-index');
+                    removeItem(index);
+                });
+            });
+        }
+
+        function updateQuantity(index, change) {
+            const newQuantity = cart[index].quantity + change;
+            
+            if (newQuantity < 1) {
+                removeItem(index);
+            } else {
+                cart[index].quantity = newQuantity;
+                updateCart();
+            }
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        // UI Functions
+        function toggleCart() {
+            cartDrawer.classList.toggle('open');
+            overlay.classList.toggle('active');
+            
+            if (cartDrawer.classList.contains('open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function showToast(message) {
+            toast.querySelector('.toast-message').textContent = message;
+            toast.classList.add('toast-success', 'show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.classList.remove('toast-success');
+                }, 300);
+            }, 3000);
+        }
+
+        function initTestimonialSlider() {
+            // Set first testimonial as active
+            testimonials[0].classList.add('active');
+            
+            // Auto-rotate testimonials
+            setInterval(() => {
+                showTestimonial((currentTestimonial + 1) % testimonials.length);
+            }, 5000);
+            
+            // Dot navigation
+            testimonialDots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const index = parseInt(dot.getAttribute('data-index'));
+                    showTestimonial(index);
+                });
+            });
+        }
+
+        function showTestimonial(index) {
+            testimonials[currentTestimonial].classList.remove('active');
+            testimonialDots[currentTestimonial].classList.remove('active');
+            
+            currentTestimonial = index;
+            
+            testimonials[currentTestimonial].classList.add('active');
+            testimonialDots[currentTestimonial].classList.add('active');
+        }
+
+        // Event Listeners
+        cartToggle.addEventListener('click', toggleCart);
+        closeCart.addEventListener('click', toggleCart);
+        overlay.addEventListener('click', toggleCart);
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        checkoutBtn.addEventListener('click', () => {
+            alert('Checkout functionality would be implemented here!\n\nTotal items: ' + 
+                  cart.reduce((sum, item) => sum + item.quantity, 0) + 
+                  '\nTotal amount: ' + cartTotal.textContent);
+        });
+
+        // Close cart/menu when clicking on nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+</body>
+</html>
